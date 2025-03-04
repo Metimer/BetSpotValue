@@ -2,9 +2,9 @@ name: ValueSpot
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # A minuit (UTC) pour `extract_advanced`
-    - cron: '0 2 * * *'  # A 2h (UTC) pour `extract_classement`
-    - cron: '0 7 * * *'  # A 7h (UTC) pour `extract_cotes_du_jour`
+    - cron: '*/15 * * * *'  # Toutes les 15 minutes pour `extract_advanced`
+    - cron: '*/15 * * * *'  # Toutes les 15 minutes pour `extract_classement`
+    - cron: '*/15 * * * *'  # Toutes les 15 minutes pour `extract_cotes_du_jour`
 
 jobs:
   extract_advanced:

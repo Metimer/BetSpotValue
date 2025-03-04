@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import time
 import subprocess
+import os 
 
 # Dictionnaire des ligues avec les noms des pays et leurs URL
 ligues = {
@@ -89,13 +90,14 @@ for pays in df_ligues_advanced.keys():
     filename = f"Against_{pays}.csv"   
     df_merged.to_csv(filename, encoding='utf-8-sig')
     print(f"📁 Fichier Against sauvegardé : {filename}")
-    repo_url = "https://github.com/Metimer/BetSpotValue.git"  # Remplace par ton repo GitHub
+    GH_TOKEN = os.getenv("GH_TOKEN")  # Récupère le token depuis GitHub Actions
+    repo_url = f"https://x-access-token:{GH_TOKEN}@github.com/Metimer/BetSpotValue.git"
 
-    # Commandes Git pour ajouter, commettre et pousser les fichiers
     commands = [
-        f"git add {filename}",
-        'git commit -m "Mise à jour automatique des stats avancées"',
-        "git push origin main"
+    "git add .",
+    'git commit -m "Mise à jour automatique des stats avancées"',
+    f"git pull --rebase {repo_url} main",  # Ajout du pull avec rebase
+    f"git push {repo_url} HEAD:main"
     ]
 
     # Exécuter les commandes Git
@@ -109,13 +111,14 @@ for pays in df_ligues_advanced2.keys():
     filename = f"Against_{pays}.csv"
     df_ligues_advanced2[pays].to_csv(filename, encoding='utf-8-sig')
     print(f"📁 Fichier Against sauvegardé : {filename}")
-    repo_url = "https://github.com/Metimer/BetSpotValue.git"  # Remplace par ton repo GitHub
+    GH_TOKEN = os.getenv("GH_TOKEN")  # Récupère le token depuis GitHub Actions
+    repo_url = f"https://x-access-token:{GH_TOKEN}@github.com/Metimer/BetSpotValue.git"
 
-    # Commandes Git pour ajouter, commettre et pousser les fichiers
     commands = [
-        f"git add {filename}",
-        'git commit -m "Mise à jour automatique des stats against"',
-        "git push origin main"
+    "git add .",
+    'git commit -m "Mise à jour automatique des stats avancées"',
+    f"git pull --rebase {repo_url} main",  # Ajout du pull avec rebase
+    f"git push {repo_url} HEAD:main"
     ]
 
     # Exécuter les commandes Git

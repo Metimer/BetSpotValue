@@ -66,26 +66,15 @@ for pays, url_part in ligues.items():
 for pays, df in df_ligues.items():
     # Enregistrer le CSV dans le répertoire du projet (à la racine)
     csv_filename = f"Classement_{ligues[pays].split('/')[-1]}.csv"
-<<<<<<< HEAD
-    df.to_csv(csv_filename, index=False)
-
-    # Configuration GitHub (remplace "ton-utilisateur" et "ton-repo" par les tiens)
-    repo_url = "https://github.com/ton-utilisateur/ValueBetSpotter.git"
-=======
     df.to_csv(csv_filename)
 
     # Configuration GitHub (remplace "ton-utilisateur" et "ton-repo" par les tiens)
     repo_url = "https://github.com/Metimer/BetValueSpot.git"
->>>>>>> 57a606d51907eb2106f60deef187d15cd4de9d84
 
     # Commandes Git
     commands = [
     "git add " + csv_filename,
-<<<<<<< HEAD
-    'git commit -m "Mise à jour automatique des cotes"',
-=======
     'git commit -m "Mise à jour automatique des classements"',
->>>>>>> 57a606d51907eb2106f60deef187d15cd4de9d84
     "git push origin main"
 ]
 
@@ -94,7 +83,3 @@ for pays, df in df_ligues.items():
       subprocess.run(command, shell=True)
 
       print("CSV mis à jour et envoyé sur GitHub avec succès.")
-<<<<<<< HEAD
-=======
-
->>>>>>> 57a606d51907eb2106f60deef187d15cd4de9d84

@@ -74,7 +74,7 @@ for pays, df in df_ligues.items():
     # Commandes Git
     commands = [
     "git add " + csv_filename,
-    'git commit -m "Mise à jour automatique des cotes"',
+    'git commit -m "Mise à jour automatique des classements"',
     "git push origin main"
 ]
 

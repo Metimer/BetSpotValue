@@ -11,18 +11,26 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}  # Utilise le token pour donner accès en écriture
+
       - name: Configure Git
         run: |
           git config --global user.email "metinamerwane@gmail.com"
           git config --global user.name "Metimer"
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.11'
+
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+
       - name: Run extract_advanced
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # Passe le token en variable d'environnement
         run: |
           python extract_advanced.py
 
@@ -31,18 +39,26 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+
       - name: Configure Git
         run: |
           git config --global user.email "metinamerwane@gmail.com"
           git config --global user.name "Metimer"
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.11'
+
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+
       - name: Run extract_classement
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           python extract_classement.py
 
@@ -51,17 +67,25 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+
       - name: Configure Git
         run: |
           git config --global user.email "metinamerwane@gmail.com"
           git config --global user.name "Metimer"
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.11'
+
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+
       - name: Run extract_cotes_du_jour
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           python extract_cotes_du_jour.py

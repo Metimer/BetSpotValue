@@ -1,0 +1,56 @@
+name: ValueSpot
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # Toutes les 15 minutes pour `extract_advanced`
+    - cron: '*/15 * * * *'  # Toutes les 15 minutes pour `extract_classement`
+    - cron: '*/15 * * * *'  # Toutes les 15 minutes pour `extract_cotes_du_jour`
+
+jobs:
+  extract_advanced:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'  # Utilisation d'une version stable de Python
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Run extract_advanced
+        run: |
+          python path/to/extract_advanced.py
+
+  extract_classement:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'  # Utilisation d'une version stable de Python
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Run extract_classement
+        run: |
+          python path/to/extract_classement.py
+
+  extract_cotes_du_jour:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'  # Utilisation d'une version stable de Python
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Run extract_cotes_du_jour
+        run: |
+          python path/to/extract_cotes_du_jour.py

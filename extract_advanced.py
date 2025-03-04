@@ -84,10 +84,10 @@ time.sleep(10)
 df_ligues_advanced2 = fetch_league_data(ligues, "stats_squads_standard_against", "adv")  # Exemple d'un autre tableau
 
 
-# Sauvegarder les données "Against" séparément
+
 for pays in df_ligues_advanced.keys():
     df_merged = pd.merge(df_ligues_stats[pays], df_ligues_advanced[pays], left_index=True, right_index=True, how="outer")
-    filename = f"Against_{pays}.csv"   
+    filename = f"Merged_{pays}.csv"   
     df_merged.to_csv(filename, encoding='utf-8-sig')
     print(f"📁 Fichier Against sauvegardé : {filename}")
     GH_TOKEN = os.getenv("GH_TOKEN")  # Récupère le token depuis GitHub Actions

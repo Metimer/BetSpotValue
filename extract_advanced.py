@@ -99,7 +99,7 @@ def git_push(csv_filename, repo_url):
     # Ajouter, commettre et pousser les fichiers modifiés
     try:
         subprocess.run(f"git add {csv_filename}", shell=True, check=True)
-        commit_message = f"📈 Mise à jour automatique de {csv_filename}"
+        commit_message = f"📈 Mise à jour automatique des stats avancées"
         subprocess.run(f'git commit -m "{commit_message}"', shell=True, check=True)
         subprocess.run("git push origin main", shell=True, check=True)
         print(f"✔️ {csv_filename} mis à jour sur GitHub.")

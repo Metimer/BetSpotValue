@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import subprocess
 
 # Dictionnaire des ligues avec les noms des pays et leurs URL
 ligues = {
@@ -63,6 +64,22 @@ for pays, url_part in ligues.items():
 
 # Sauvegarder les résultats dans des fichiers CSV
 for pays, df in df_ligues.items():
-    filename = f"Classement_{ligues[pays].split('/')[-1]}.csv"  # Nettoyage du nom de fichier
-    df.to_csv(f'C:\\Users\\metin\\OneDrive\\Bureau\\Projet3\\{filename}', encoding='utf-8-sig')
-    print(f"📁 Fichier sauvegardé : {filename}")
+    # Enregistrer le CSV dans le répertoire du projet (à la racine)
+    csv_filename = f"Classement_{ligues[pays].split('/')[-1]}.csv"
+    df.to_csv(csv_filename, index=False)
+
+    # Configuration GitHub (remplace "ton-utilisateur" et "ton-repo" par les tiens)
+    repo_url = "https://github.com/ton-utilisateur/ValueBetSpotter.git"
+
+    # Commandes Git
+    commands = [
+    "git add " + csv_filename,
+    'git commit -m "Mise à jour automatique des cotes"',
+    "git push origin main"
+]
+
+    # Exécuter les commandes Git
+    for command in commands:
+      subprocess.run(command, shell=True)
+
+      print("CSV mis à jour et envoyé sur GitHub avec succès.")

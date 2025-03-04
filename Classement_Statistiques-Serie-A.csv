@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 games,wins,ties,losses,goals_for,goals_against,goal_diff,points,points_avg,xg_for,xg_against,xg_diff,xg_diff_per90,last_5,attendance_per_g,top_team_scorers,top_keeper,notes
 27,17,7,3,60,25,+35,58,2.15,48.7,24.2,+24.5,+0.91,DVDVN,"70,459",Marcus Thuram-13,Yann Sommer,
 27,17,6,4,43,22,+21,57,2.11,36.6,20.5,+16.2,+0.60,NNNDN,"49,809",Romelu Lukaku-9,Alex Meret,
@@ -19,3 +20,26 @@ games,wins,ties,losses,goals_for,goals_against,goal_diff,points,points_avg,xg_fo
 27,4,10,13,23,44,-21,22,0.81,23.4,36.7,-13.3,-0.49,DDDDN,"10,336",Sebastiano Esposito-8,Devis Vásquez,
 27,3,9,15,22,41,-19,18,0.67,24.2,42.4,-18.1,-0.67,DDDNN,"10,238",Joel Pohjanpalo-6,Filip Stankovic,
 27,2,8,17,21,45,-24,14,0.52,21.5,36.7,-15.1,-0.56,DDNDD,"11,884","Milan Đurić,Dany Mota-4",Stefano Turati,
+=======
+,games,wins,ties,losses,goals_for,goals_against,goal_diff,points,points_avg,xg_for,xg_against,xg_diff,xg_diff_per90,last_5,attendance_per_g,top_team_scorers,top_keeper,notes
+Inter,27,17,7,3,60,25,+35,58,2.15,48.7,24.2,+24.5,+0.91,DVDVN,"70,459",Marcus Thuram-13,Yann Sommer,
+Napoli,27,17,6,4,43,22,+21,57,2.11,36.6,20.5,+16.2,+0.60,NNNDN,"49,809",Romelu Lukaku-9,Alex Meret,
+Atalanta,27,16,7,4,59,26,+33,55,2.04,46.4,25.4,+21.0,+0.78,NVNVN,"22,742",Mateo Retegui-21,Marco Carnesecchi,
+Juventus,27,13,13,1,45,21,+24,52,1.93,38.5,23.3,+15.2,+0.56,VVVVV,"40,679",Dušan Vlahović-9,Michele Di Gregorio,
+Lazio,27,15,5,7,49,35,+14,50,1.85,42.8,29.0,+13.8,+0.51,VVNNV,"38,776",Valentín Castellanos-9,Ivan Provedel,
+Bologna,27,12,11,4,42,33,+9,47,1.74,36.7,26.1,+10.6,+0.39,NVDVV,"26,383",Riccardo Orsolini-9,Łukasz Skorupski,
+Fiorentina,27,13,6,8,42,28,+14,45,1.67,34.9,27.8,+7.1,+0.26,VDDDV,"20,313",Moise Kean-15,David de Gea,
+Roma,27,12,7,8,42,30,+12,43,1.59,38.5,30.5,+7.9,+0.29,NVVVV,"61,255",Artem Dovbyk-9,Mile Svilar,
+Milan,27,11,8,8,39,30,+9,41,1.52,43.9,29.7,+14.2,+0.53,VVDDD,"71,569",Tijjani Reijnders-8,Mike Maignan,
+Udinese,27,11,6,10,34,37,-3,39,1.44,27.5,36.6,-9.0,-0.33,VNVVV,"20,758",Lorenzo Lucca-10,Maduka Okoye,
+Torino,27,8,10,9,31,32,-1,34,1.26,24.3,36.3,-12.0,-0.45,NNDVV,"22,843",Che Adams-7,Vanja Milinković-Savić,
+Genoa,27,7,10,10,25,35,-10,31,1.15,28.2,34.3,-6.1,-0.23,DNVDN,"31,198",Andrea Pinamonti-8,Nicola Leali,
+Como,27,7,7,13,33,43,-10,28,1.04,30.3,28.9,+1.4,+0.05,DDVVD,"10,435","Patrick Cutrone,Nicolás Paz-6",Pepe Reina,
+Hellas Verona,27,8,2,17,27,56,-29,26,0.96,26.2,42.4,-16.2,-0.60,VDDVD,"26,112",Casper Tengstedt-6,Lorenzo Montipò,
+Cagliari,27,6,7,14,27,42,-15,25,0.93,32.3,43.1,-10.8,-0.40,DVNDD,"16,063",Roberto Piccoli-7,Simone Scuffet,
+Lecce,27,6,7,14,18,43,-25,25,0.93,24.8,41.2,-16.4,-0.61,VNNDD,"26,052",Nikola Krstović-7,Wladimiro Falcone,
+Parma,27,5,8,14,32,46,-14,23,0.85,31.8,46.7,-14.9,-0.55,DDDVD,"18,634",Ange-Yoan Bonny-5,Zion Suzuki,
+Empoli,27,4,10,13,23,44,-21,22,0.81,23.4,36.7,-13.3,-0.49,DDDDN,"10,336",Sebastiano Esposito-8,Devis Vásquez,
+Venezia,27,3,9,15,22,41,-19,18,0.67,24.2,42.4,-18.1,-0.67,DDDNN,"10,238",Joel Pohjanpalo-6,Filip Stankovic,
+Monza,27,2,8,17,21,45,-24,14,0.52,21.5,36.7,-15.1,-0.56,DDNDD,"11,884","Milan Đurić,Dany Mota-4",Stefano Turati,
+>>>>>>> 57a606d51907eb2106f60deef187d15cd4de9d84

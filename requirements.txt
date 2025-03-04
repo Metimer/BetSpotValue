@@ -3,7 +3,11 @@ bs4==0.0.2
 certifi==2025.1.31
 charset-normalizer==3.4.1
 idna==3.10
+<<<<<<< HEAD
 numpy==2.2.3
+=======
+numpy==1.24.4
+>>>>>>> 57a606d51907eb2106f60deef187d15cd4de9d84
 pandas==2.2.3
 python-dateutil==2.9.0.post0
 pytz==2025.1

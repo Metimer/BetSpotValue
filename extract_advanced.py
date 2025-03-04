@@ -2,8 +2,15 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import time
+<<<<<<< HEAD
 import subprocess
 
+=======
+import os 
+import subprocess
+
+
+>>>>>>> 57a606d51907eb2106f60deef187d15cd4de9d84
 # Dictionnaire des ligues avec les noms des pays et leurs URL
 ligues = {
     'France': '13/Statistiques-Ligue-1',
@@ -74,6 +81,38 @@ def fetch_league_data(ligues, table_id, prefix):
 
     return df_ligues
 
+<<<<<<< HEAD
+=======
+# Fonction pour sauvegarder les DataFrames fusionnés et pousser les changements sur GitHub
+def save_merged_data(df_ligues_stats, df_ligues_advanced, output_dir, repo_url):
+    for pays in df_ligues_stats.keys():
+        if pays in df_ligues_advanced:
+            # Fusion sur l'index (nom de l'équipe)
+            df_merged = pd.merge(df_ligues_stats[pays], df_ligues_advanced[pays], left_index=True, right_index=True, how="outer", suffixes=('_stats', '_advanced'))
+
+            # Nom du fichier basé sur la ligue
+            filename = f"Merged_{ligues[pays].split('/')[-1]}.csv"
+            filepath = os.path.join(output_dir, filename)
+
+            # Sauvegarde du fichier CSV fusionné
+            df_merged.to_csv(filepath, encoding='utf-8-sig')
+            print(f"📁 Fichier fusionné sauvegardé : {filepath}")
+
+            # Pousser le fichier sur GitHub
+            git_push(filepath, repo_url)
+
+# Fonction pour effectuer le push des changements sur GitHub
+def git_push(csv_filename, repo_url):
+    # Ajouter, commettre et pousser les fichiers modifiés
+    try:
+        subprocess.run(f"git add {csv_filename}", shell=True, check=True)
+        commit_message = f"📈 Mise à jour automatique des stats avancées"
+        subprocess.run(f'git commit -m "{commit_message}"', shell=True, check=True)
+        subprocess.run("git push origin main", shell=True, check=True)
+        print(f"✔️ {csv_filename} mis à jour sur GitHub.")
+    except subprocess.CalledProcessError as e:
+        print(f"Erreur lors de l'exécution des commandes Git : {e}")
+>>>>>>> 57a606d51907eb2106f60deef187d15cd4de9d84
 
 # 🔹 Récupérer deux types de statistiques (exemple : Standard et Avancées)
 df_ligues_stats = fetch_league_data(ligues, "stats_squads_standard_for", "stats_")
@@ -83,6 +122,7 @@ time.sleep(10)
 df_ligues_advanced2 = fetch_league_data(ligues, "stats_squads_standard_against", "adv")  # Exemple d'un autre tableau
 
 
+<<<<<<< HEAD
 # Sauvegarder les données "Against" séparément
 for pays in df_ligues_advanced.keys():
     df_merged = pd.merge(df_ligues_stats[pays], df_ligues_advanced[pays], left_index=True, right_index=True, how="outer")
@@ -123,3 +163,19 @@ for pays in df_ligues_advanced2.keys():
         subprocess.run(command, shell=True)
 
     print(f"CSV pour {pays} mis à jour et envoyé sur GitHub avec succès.")
+=======
+# 🔹 Fusionner les DataFrames correspondants et les exporter
+output_directory = 'C:\\Users\\metin\\OneDrive\\Bureau\\Projet3\\p3'
+repo_url = "https://github.com/Metimer/BetSpotValue.git"  # Remplace par ton URL de repo GitHub
+
+save_merged_data(df_ligues_stats, df_ligues_advanced, output_directory, repo_url)
+
+# Sauvegarder les données "Against" séparément et pousser
+for pays in df_ligues_advanced2.keys():
+    filename = f"Against_{pays}.csv"
+    filepath = os.path.join(output_directory, filename)
+    df_ligues_advanced2[pays].to_csv(filepath, encoding='utf-8-sig')
+    
+    # Pousser chaque fichier "Against" sur GitHub
+    git_push(filepath, repo_url)
+>>>>>>> 57a606d51907eb2106f60deef187d15cd4de9d84

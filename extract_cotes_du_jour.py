@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 57a606d51907eb2106f60deef187d15cd4de9d84
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -96,7 +100,11 @@ csv_filename = "cotes_du_jour.csv"
 df.to_csv(csv_filename, index=False)
 
 # Configuration GitHub (remplace "ton-utilisateur" et "ton-repo" par les tiens)
+<<<<<<< HEAD
 repo_url = "https://github.com/ton-utilisateur/ValueBetSpotter.git"
+=======
+repo_url = "https://github.com/Metimer/BetSpotValue.git"
+>>>>>>> 57a606d51907eb2106f60deef187d15cd4de9d84
 
 # Commandes Git
 commands = [

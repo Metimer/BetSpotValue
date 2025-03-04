@@ -108,9 +108,9 @@ def git_push(csv_filename, repo_url):
 
 # 🔹 Récupérer deux types de statistiques (exemple : Standard et Avancées)
 df_ligues_stats = fetch_league_data(ligues, "stats_squads_standard_for", "stats_")
-time.sleep(60)
+time.sleep(10)
 df_ligues_advanced = fetch_league_data(ligues, "stats_squads_keeper_for", "full_")  # Exemple d'un autre tableau
-time.sleep(60)
+time.sleep(10)
 df_ligues_advanced2 = fetch_league_data(ligues, "stats_squads_standard_against", "adv")  # Exemple d'un autre tableau
 
 

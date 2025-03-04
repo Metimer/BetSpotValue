@@ -112,10 +112,10 @@ time.sleep(60)
 df_ligues_advanced = fetch_league_data(ligues, "stats_squads_keeper_for", "full_")  # Exemple d'un autre tableau
 time.sleep(60)
 df_ligues_advanced2 = fetch_league_data(ligues, "stats_squads_standard_against", "adv")  # Exemple d'un autre tableau
-time.sleep(60)
+
 
 # 🔹 Fusionner les DataFrames correspondants et les exporter
-output_directory = 'C:\\Users\\metin\\OneDrive\\Bureau\\Projet3'
+output_directory = 'C:\\Users\\metin\\OneDrive\\Bureau\\Projet3\\p3'
 repo_url = "https://github.com/Metimer/BetSpotValue.git"  # Remplace par ton URL de repo GitHub
 
 save_merged_data(df_ligues_stats, df_ligues_advanced, output_directory, repo_url)

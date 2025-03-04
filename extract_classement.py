@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import subprocess
+import os
 
 # Dictionnaire des ligues avec les noms des pays et leurs URL
 ligues = {
@@ -68,15 +69,15 @@ for pays, df in df_ligues.items():
     csv_filename = f"Classement_{ligues[pays].split('/')[-1]}.csv"
     df.to_csv(csv_filename)
 
-    # Configuration GitHub (remplace "ton-utilisateur" et "ton-repo" par les tiens)
-    repo_url = "https://github.com/Metimer/BetValueSpot.git"
+    GH_TOKEN = os.getenv("GH_TOKEN")  # Récupère le token depuis GitHub Actions
+    repo_url = f"https://x-access-token:{GH_TOKEN}@github.com/Metimer/BetSpotValue.git"
 
-    # Commandes Git
     commands = [
-    "git add " + csv_filename,
-    'git commit -m "Mise à jour automatique des classements"',
-    "git push origin main"
-]
+    "git add .",
+    'git commit -m "Mise à jour automatique des stats avancées"',
+    f"git pull --rebase {repo_url} main",  # Ajout du pull avec rebase
+    f"git push {repo_url} HEAD:main"
+ ]
 
     # Exécuter les commandes Git
     for command in commands:

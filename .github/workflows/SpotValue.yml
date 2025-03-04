@@ -11,6 +11,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      - name: Configure Git
+        run: |
+          git config --global user.email "metinamerwane@gmail.com"
+          git config --global user.name "Metimer"
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -27,6 +31,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      - name: Configure Git
+        run: |
+          git config --global user.email "metinamerwane@gmail.com"
+          git config --global user.name "Metimer"
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -43,6 +51,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      - name: Configure Git
+        run: |
+          git config --global user.email "metinamerwane@gmail.com"
+          git config --global user.name "Metimer"
       - name: Set up Python
         uses: actions/setup-python@v2
         with:

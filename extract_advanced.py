@@ -2,8 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import time
-import os 
-
+import subprocess
 
 # Dictionnaire des ligues avec les noms des pays et leurs URL
 ligues = {
@@ -75,36 +74,52 @@ def fetch_league_data(ligues, table_id, prefix):
 
     return df_ligues
 
-# Fonction pour sauvegarder les DataFrames fusionnés
-def save_merged_data(df_ligues_stats, df_ligues_advanced, output_dir):
-    for pays in df_ligues_stats.keys():
-        if pays in df_ligues_advanced:
-            # Fusion sur l'index (nom de l'équipe)
-            df_merged = pd.merge(df_ligues_stats[pays], df_ligues_advanced[pays], left_index=True, right_index=True, how="outer", suffixes=('_stats', '_advanced'))
-           
-            # Nom du fichier basé sur la ligue
-            filename = f"Merged_{ligues[pays].split('/')[-1]}.csv"
-            filepath = os.path.join(output_dir, filename)
-
-            # Sauvegarde du fichier CSV fusionné
-            df_merged.to_csv(filepath, encoding='utf-8-sig')
-            print(f"📁 Fichier fusionné sauvegardé : {filepath}")
 
 # 🔹 Récupérer deux types de statistiques (exemple : Standard et Avancées)
 df_ligues_stats = fetch_league_data(ligues, "stats_squads_standard_for", "stats_")
-time.sleep(60)
+time.sleep(10)
 df_ligues_advanced = fetch_league_data(ligues, "stats_squads_keeper_for", "full_")  # Exemple d'un autre tableau
-time.sleep(60)
+time.sleep(10)
 df_ligues_advanced2 = fetch_league_data(ligues, "stats_squads_standard_against", "adv")  # Exemple d'un autre tableau
-time.sleep(60)
 
-# 🔹 Fusionner les DataFrames correspondants et les exporter
-output_directory = 'C:\\Users\\metin\\OneDrive\\Bureau\\Projet3'
-save_merged_data(df_ligues_stats, df_ligues_advanced, output_directory)
+
+# Sauvegarder les données "Against" séparément
+for pays in df_ligues_advanced.keys():
+    df_merged = pd.merge(df_ligues_stats[pays], df_ligues_advanced[pays], left_index=True, right_index=True, how="outer")
+    filename = f"Against_{pays}.csv"   
+    df_merged.to_csv(filename, encoding='utf-8-sig')
+    print(f"📁 Fichier Against sauvegardé : {filename}")
+    repo_url = "https://github.com/Metimer/BetSpotValue.git"  # Remplace par ton repo GitHub
+
+    # Commandes Git pour ajouter, commettre et pousser les fichiers
+    commands = [
+        f"git add {filename}",
+        'git commit -m "Mise à jour automatique des stats avancées"',
+        "git push origin main"
+    ]
+
+    # Exécuter les commandes Git
+    for command in commands:
+        subprocess.run(command, shell=True)
+
+    print(f"CSV pour {pays} mis à jour et envoyé sur GitHub avec succès.")
 
 # Sauvegarder les données "Against" séparément
 for pays in df_ligues_advanced2.keys():
     filename = f"Against_{pays}.csv"
-    filepath = os.path.join(output_directory, filename)
-    df_ligues_advanced2[pays].to_csv(filepath, encoding='utf-8-sig')
-    print(f"📁 Fichier Against sauvegardé : {filepath}")
+    df_ligues_advanced2[pays].to_csv(filename, encoding='utf-8-sig')
+    print(f"📁 Fichier Against sauvegardé : {filename}")
+    repo_url = "https://github.com/Metimer/BetSpotValue.git"  # Remplace par ton repo GitHub
+
+    # Commandes Git pour ajouter, commettre et pousser les fichiers
+    commands = [
+        f"git add {filename}",
+        'git commit -m "Mise à jour automatique des stats against"',
+        "git push origin main"
+    ]
+
+    # Exécuter les commandes Git
+    for command in commands:
+        subprocess.run(command, shell=True)
+
+    print(f"CSV pour {pays} mis à jour et envoyé sur GitHub avec succès.")

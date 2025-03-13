@@ -2,9 +2,8 @@ name: SpotValue
 
 on:
   schedule:
-    - cron: '0 0 * * *'   # extract_cotes_du_jour.py à minuit (00:00)
-    - cron: '40 12 * * *'  # extract_advanced.py à 00:10
-    - cron: '50 12 * * *'  # extract_classement.py à 00:20
+    # Déclenchement toutes les 4 heures (00:00, 04:00, 08:00, 12:00, 16:00, 20:00)
+    - cron: '0 */4 * * *'  # Exécution de tous les jobs toutes les 4 heures
   workflow_dispatch:  # Permet l'exécution manuelle si nécessaire
 
 jobs:
@@ -38,7 +37,6 @@ jobs:
 
   extract_advanced:
     runs-on: ubuntu-latest
-    if: github.event.schedule == '10 0 * * *'  # Exécution à 00:10
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -67,7 +65,6 @@ jobs:
 
   extract_classement:
     runs-on: ubuntu-latest
-    if: github.event.schedule == '20 0 * * *'  # Exécution à 00:20
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2

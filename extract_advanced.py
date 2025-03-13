@@ -19,6 +19,16 @@ ligues = {
     'Angleterre': '9/Statistiques-Premier-League'
 }
 chrome_options = Options()
+chrome_options.add_argument('--headless')  # Exécution sans interface graphique
+chrome_options.add_argument('--disable-gpu')  # Désactive le GPU
+chrome_options.add_argument("--no-sandbox")  # Important pour éviter certains problèmes dans CI
+chrome_options.add_argument("--remote-debugging-port=9222")  # Pour des tests à distance si nécessaire
+
+temp_dir = tempfile.mkdtemp()
+chrome_options.add_argument(f"--user-data-dir={temp_dir}")
+# Configuration Selenium avec le gestionnaire de ChromeDriver
+service = Service(ChromeDriverManager().install())
+driver = webdriver.Chrome(service=service,options=chrome_options)
 
 
 # Initialisation du service avec le gestionnaire de ChromeDriver

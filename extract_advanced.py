@@ -9,6 +9,7 @@ import random
 import subprocess
 import os
 from bs4 import BeautifulSoup
+import tempfile
 
 # Dictionnaire des ligues avec les noms des pays et leurs URL
 ligues = {

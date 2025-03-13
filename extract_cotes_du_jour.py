@@ -18,8 +18,8 @@ navigator = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1)'
 
 # Initialisation des listes pour stocker les données
 data = {
-    'Pays': [],  
-    'Ligue': [],  
+    'Pays': [],
+    'Ligue': [],
     'Numéro de Pari': [],
     'Date du Match': [],
     'Heure de Fin de Validité': [],
@@ -88,6 +88,13 @@ for pays, url_part in ligues.items():
         data['Cote Domicile'].append(cotes_vdomicile[i] if i < len(cotes_vdomicile) else None)
         data['Cote Nul'].append(cotes_nul[i] if i < len(cotes_nul) else None)
         data['Cote Extérieur'].append(cotes_vexterieur[i] if i < len(cotes_vexterieur) else None)
+
+# Vérifier les longueurs de chaque colonne dans 'data'
+max_length = max(len(value) for value in data.values())
+for key, value in data.items():
+    if len(value) < max_length:
+        # Compléter les valeurs manquantes avec None
+        data[key] = value + [None] * (max_length - len(value))
 
 # Création du DataFrame à partir du dictionnaire
 df = pd.DataFrame(data)

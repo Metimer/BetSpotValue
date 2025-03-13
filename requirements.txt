@@ -13,3 +13,5 @@ soupsieve==2.6
 typing_extensions==4.12.2
 tzdata==2025.1
 urllib3==2.3.0
+selenium==4.8.0
+webdriver-manager==4.8.0

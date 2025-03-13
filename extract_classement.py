@@ -8,6 +8,7 @@ import pandas as pd
 import subprocess
 import os
 import time
+import tempfile
 
 # Dictionnaire des ligues avec les noms des pays et leurs URL
 ligues = {
@@ -18,7 +19,8 @@ ligues = {
     'Angleterre': '9/Statistiques-Premier-League'
 }
 chrome_options = Options()
-chrome_options.add_argument("--user-data-dir=/tmp/chrome_data")
+temp_dir = tempfile.mkdtemp()
+chrome_options.add_argument(f"--user-data-dir={temp_dir}")
 # Configuration Selenium avec le gestionnaire de ChromeDriver
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service,options=chrome_options)

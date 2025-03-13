@@ -19,7 +19,7 @@ ligues = {
     'Angleterre': '9/Statistiques-Premier-League'
 }
 chrome_options = Options()
-chrome_options.add_argument("--user-data-dir=/tmp/chrome_data")
+
 
 # Initialisation du service avec le gestionnaire de ChromeDriver
 service = Service(ChromeDriverManager().install())

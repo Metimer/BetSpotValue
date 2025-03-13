@@ -2,66 +2,12 @@ name: SpotValue
 
 on:
   schedule:
-    - cron: '*/15 * * * *'  # Toutes les 15 minutes
+    - cron: '0 0 * * *'   # extract_cotes_du_jour.py à minuit (00:00)
+    - cron: '10 0 * * *'  # extract_advanced.py à 00:10
+    - cron: '20 0 * * *'  # extract_classement.py à 00:20
   workflow_dispatch:  # Permet l'exécution manuelle si nécessaire
 
 jobs:
-  extract_advanced:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GH_TOKEN }}  # Utilise le token pour donner accès en écriture
-
-      - name: Configure Git
-        run: |
-          git config --global user.email "metinamerwane@gmail.com"
-          git config --global user.name "Metimer"
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-
-      - name: Run extract_advanced
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # Passe le token en variable d'environnement
-        run: |
-          python extract_advanced.py
-
-  extract_classement:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-
-      - name: Configure Git
-        run: |
-          git config --global user.email "metinamerwane@gmail.com"
-          git config --global user.name "Metimer"
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-
-      - name: Run extract_classement
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
-          python extract_classement.py
-
   extract_cotes_du_jour:
     runs-on: ubuntu-latest
     steps:
@@ -89,3 +35,61 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           python extract_cotes_du_jour.py
+
+  extract_advanced:
+    runs-on: ubuntu-latest
+    if: github.event.schedule == '10 0 * * *'  # Exécution à 00:10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "metinamerwane@gmail.com"
+          git config --global user.name "Metimer"
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run extract_advanced
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          python extract_advanced.py
+
+  extract_classement:
+    runs-on: ubuntu-latest
+    if: github.event.schedule == '20 0 * * *'  # Exécution à 00:20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "metinamerwane@gmail.com"
+          git config --global user.name "Metimer"
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run extract_classement
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          python extract_classement.py

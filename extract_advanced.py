@@ -24,7 +24,7 @@ chrome_options.add_argument("--user-data-dir=/tmp/chrome_data")
 service = Service(ChromeDriverManager().install())
 
 # Configuration du driver Selenium
-driver = webdriver.Chrome(service=service)
+driver = webdriver.Chrome(service=service,options=chrome_options)
 
 # Fonction pour récupérer les statistiques d'une ligue en fonction d'un ID de tableau
 def fetch_league_data(ligues, table_id, prefix):

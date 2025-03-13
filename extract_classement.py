@@ -20,7 +20,7 @@ chrome_options = Options()
 chrome_options.add_argument("--user-data-dir=/tmp/chrome_data")
 # Configuration Selenium avec le gestionnaire de ChromeDriver
 service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service)
+driver = webdriver.Chrome(service=service,options=chrome_options)
 
 # Initialisation du dictionnaire des ligues
 df_ligues = {}

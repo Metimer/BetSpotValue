@@ -50,7 +50,7 @@ for pays, url_part in ligues.items():
     soup = BeautifulSoup(page_source, 'html.parser')
 
     # Récupérer uniquement la section <tbody> du tableau
-    tbody = soup.find("tbody")
+    tbody = soup.find_all("tbody")
     if not tbody:
         print(f"⚠️ Aucun tableau trouvé pour {pays}.")
         continue

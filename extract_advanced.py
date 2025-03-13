@@ -1,9 +1,13 @@
-import requests
-from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 import time
+import random
 import subprocess
-import os 
+import os
+from bs4 import BeautifulSoup
 
 # Dictionnaire des ligues avec les noms des pays et leurs URL
 ligues = {
@@ -14,13 +18,11 @@ ligues = {
     'Angleterre': '9/Statistiques-Premier-League'
 }
 
+# Initialisation du service avec le gestionnaire de ChromeDriver
+service = Service(ChromeDriverManager().install())
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Connection': 'keep-alive'
-}
+# Configuration du driver Selenium
+driver = webdriver.Chrome(service=service)
 
 # Fonction pour récupérer les statistiques d'une ligue en fonction d'un ID de tableau
 def fetch_league_data(ligues, table_id, prefix):
@@ -28,14 +30,21 @@ def fetch_league_data(ligues, table_id, prefix):
 
     for pays, url_part in ligues.items():
         url = f'https://fbref.com/fr/comps/{url_part}'
-        response = requests.get(url, headers=headers)
 
-        if response.status_code != 200:
-            print(f"❌ Erreur lors de la récupération de la page pour {pays}.")
-            continue
+        # Charger la page avec Selenium pour contourner Cloudflare
+        driver.get(url)
+        
+        # Attendre que la page soit bien chargée
+        time.sleep(random.uniform(3, 7))  # Pause pour attendre que la page charge
 
-        soup = BeautifulSoup(response.text, 'html.parser')
-        table = soup.find("table", {"id": table_id})  # On cherche un tableau spécifique
+        # Récupérer le contenu de la page après chargement
+        page_content = driver.page_source
+
+        # Utiliser BeautifulSoup pour analyser le contenu
+        soup = BeautifulSoup(page_content, 'html.parser')
+
+        # Chercher le tableau spécifique dans la page
+        table = soup.find("table", {"id": table_id})
         if not table:
             print(f"⚠️ Table {table_id} non trouvée pour {pays}.")
             continue
@@ -48,6 +57,7 @@ def fetch_league_data(ligues, table_id, prefix):
         teams = []
         stats = []
 
+        # Analyser les lignes du tableau
         for row in tbody.find_all("tr"):
             cells = row.find_all(attrs={"data-stat": True})
             row_data = {}
@@ -73,31 +83,34 @@ def fetch_league_data(ligues, table_id, prefix):
 
         print(f"✅ Données récupérées pour {pays} ({table_id})")
 
+        # Attendre un délai aléatoire pour éviter les blocages
+        time.sleep(random.uniform(1, 3))
+
     return df_ligues
 
-
-# 🔹 Récupérer deux types de statistiques (exemple : Standard et Avancées)
+# Récupérer deux types de statistiques
 df_ligues_stats = fetch_league_data(ligues, "stats_squads_standard_for", "stats_")
 time.sleep(10)
-df_ligues_advanced = fetch_league_data(ligues, "stats_squads_keeper_for", "full_")  # Exemple d'un autre tableau
+df_ligues_advanced = fetch_league_data(ligues, "stats_squads_keeper_for", "full_")
 time.sleep(10)
-df_ligues_advanced2 = fetch_league_data(ligues, "stats_squads_standard_against", "adv")  # Exemple d'un autre tableau
+df_ligues_advanced2 = fetch_league_data(ligues, "stats_squads_standard_against", "adv")
 
-
-
+# Sauvegarder les fichiers CSV
 for pays in df_ligues_advanced.keys():
     df_merged = pd.merge(df_ligues_stats[pays], df_ligues_advanced[pays], left_index=True, right_index=True, how="outer")
-    filename = f"Merged_{pays}.csv"   
+    filename = f"Merged_{pays}.csv"
     df_merged.to_csv(filename, encoding='utf-8-sig')
-    print(f"📁 Fichier Against sauvegardé : {filename}")
-    GH_TOKEN = os.getenv("GH_TOKEN")  # Récupère le token depuis GitHub Actions
+    print(f"📁 Fichier {pays} sauvegardé : {filename}")
+    
+    # Commit et push vers GitHub
+    GH_TOKEN = os.getenv("GH_TOKEN")
     repo_url = f"https://x-access-token:{GH_TOKEN}@github.com/Metimer/BetSpotValue.git"
 
     commands = [
-    "git add .",
-    'git commit -m "Mise à jour automatique des stats avancées"',
-    f"git pull --rebase {repo_url} main",  # Ajout du pull avec rebase
-    f"git push {repo_url} HEAD:main"
+        "git add .",
+        'git commit -m "Mise à jour automatique des stats avancées"',
+        f"git pull --rebase {repo_url} main",  # Ajout du pull avec rebase
+        f"git push {repo_url} HEAD:main"
     ]
 
     # Exécuter les commandes Git
@@ -106,19 +119,21 @@ for pays in df_ligues_advanced.keys():
 
     print(f"CSV pour {pays} mis à jour et envoyé sur GitHub avec succès.")
 
-# Sauvegarder les données "Against" séparément
+# Sauvegarder les données "Against"
 for pays in df_ligues_advanced2.keys():
     filename = f"Against_{pays}.csv"
     df_ligues_advanced2[pays].to_csv(filename, encoding='utf-8-sig')
     print(f"📁 Fichier Against sauvegardé : {filename}")
-    GH_TOKEN = os.getenv("GH_TOKEN")  # Récupère le token depuis GitHub Actions
+    
+    # Commit et push vers GitHub
+    GH_TOKEN = os.getenv("GH_TOKEN")
     repo_url = f"https://x-access-token:{GH_TOKEN}@github.com/Metimer/BetSpotValue.git"
 
     commands = [
-    "git add .",
-    'git commit -m "Mise à jour automatique des stats avancées"',
-    f"git pull --rebase {repo_url} main",  # Ajout du pull avec rebase
-    f"git push {repo_url} HEAD:main"
+        "git add .",
+        'git commit -m "Mise à jour automatique des stats avancées"',
+        f"git pull --rebase {repo_url} main",  # Ajout du pull avec rebase
+        f"git push {repo_url} HEAD:main"
     ]
 
     # Exécuter les commandes Git
@@ -126,3 +141,6 @@ for pays in df_ligues_advanced2.keys():
         subprocess.run(command, shell=True)
 
     print(f"CSV pour {pays} mis à jour et envoyé sur GitHub avec succès.")
+
+# Fermer le navigateur une fois que tout est terminé
+driver.quit()
